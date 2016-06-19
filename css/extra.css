@@ -1,0 +1,30 @@
+/* 
+ * extra CSS templates for uvaesc.com 
+ * created by Jack Morris, 06/19/16
+ */
+
+
+/* A class to align images with different size by aspect ratio */
+.aspect-ratio-container-list > li > a
+{
+  display: block;
+  width: 100%;
+  position: relative;
+  height: 0;
+  padding: 56.25% 0 0 0;
+  overflow: hidden;
+  background: rgba(0,0,0,.5);
+}
+
+.aspect-ratio-container-list > li > a > img
+{
+  position: absolute;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
