@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "The official website for Engineering Student Council at the University of Virginia",
   "keywords": [
-    "UVA", "engineering", "UVAESC",  
+    "UVA", 
+    "engineering", 
+    "UVAESC"  
   ],
   "author": {
     "name": "Jack Morris",
