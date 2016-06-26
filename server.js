@@ -34,25 +34,17 @@ var App = function() {
     /*  ================================================================  */
 
     /**
-     *  Create the routing table entries + handlers for the application.
-     */
-    self.createRoutes = function() {
-        app.use(express.static(__dirname + '/public'));
-    };
-
-    /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
      */
     self.initializeServer = function() {
-        self.createRoutes();
         self.app = express();
 
         // New call to compress content
         self.app.use(express.compress());
 
         // Call static content from /public folder
-        app.use(express.static(__dirname + '/public'));
+        self.app.use(express.static(__dirname + '/public'));
     };
 
     /**
