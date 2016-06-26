@@ -60,7 +60,6 @@ var App = function() {
      */
     self.initialize = function() {
         self.setupVariables();
-        self.setupTerminationHandlers();
 
         // Create the express server and routes.
         self.initializeServer();
