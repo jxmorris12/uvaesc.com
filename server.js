@@ -64,7 +64,7 @@ var App = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        self.app = express();
 
         // New call to compress content
         self.app.use(express.compress());
