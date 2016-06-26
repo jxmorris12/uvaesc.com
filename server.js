@@ -78,4 +78,3 @@ var App = function() {
 var app = new App();
 app.initialize();
 app.start();
-
