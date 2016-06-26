@@ -1,17 +1,13 @@
 #!/bin/env node
-//  OpenShift sample Node application
+// Jack Morris 06/26/16
+
 var express = require('express');
 var fs      = require('fs');
 
-
-/**
- *  Define the sample application.
- */
-var SampleApp = function() {
+var App = function() {
 
     //  Scope.
     var self = this;
-
 
     /*  ================================================================  */
     /*  Helper functions.                                                 */
@@ -33,7 +29,6 @@ var SampleApp = function() {
         };
     };
 
-
     /**
      *  Populate the cache.
      */
@@ -46,44 +41,11 @@ var SampleApp = function() {
         self.zcache['index.html'] = fs.readFileSync('./index.html');
     };
 
-
     /**
      *  Retrieve entry (content) from cache.
      *  @param {string} key  Key identifying content to retrieve from cache.
      */
     self.cache_get = function(key) { return self.zcache[key]; };
-
-
-    /**
-     *  terminator === the termination handler
-     *  Terminate server on receipt of the specified signal.
-     *  @param {string} sig  Signal to terminate on.
-     */
-    self.terminator = function(sig){
-        if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
-                       Date(Date.now()), sig);
-           process.exit(1);
-        }
-        console.log('%s: Node server stopped.', Date(Date.now()) );
-    };
-
-
-    /**
-     *  Setup termination handlers (for exit and a list of signals).
-     */
-    self.setupTerminationHandlers = function(){
-        //  Process on exit and signals.
-        process.on('exit', function() { self.terminator(); });
-
-        // Removed 'SIGPIPE' from the list - bugz 852598.
-        ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
-        ].forEach(function(element, index, array) {
-            process.on(element, function() { self.terminator(element); });
-        });
-    };
-
 
     /*  ================================================================  */
     /*  App server functions (main app logic here).                       */
@@ -93,19 +55,8 @@ var SampleApp = function() {
      *  Create the routing table entries + handlers for the application.
      */
     self.createRoutes = function() {
-        self.routes = { };
-
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
+        app.use(express.static(__dirname + '/public'));
     };
-
 
     /**
      *  Initialize the server (express) and create the routes and register
@@ -115,15 +66,15 @@ var SampleApp = function() {
         self.createRoutes();
         self.app = express.createServer();
 
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
+        // New call to compress content
+        self.app.use(express.compress());
+
+        // Call static content from /public folder
+        app.use(express.static(__dirname + '/public'));
     };
 
-
     /**
-     *  Initializes the sample application.
+     *  Initialize the sample application.
      */
     self.initialize = function() {
         self.setupVariables();
@@ -134,9 +85,8 @@ var SampleApp = function() {
         self.initializeServer();
     };
 
-
     /**
-     *  Start the server (starts up the sample application).
+     *  Start the server.
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
@@ -153,7 +103,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
-zapp.initialize();
-zapp.start();
+var app = new App();
+app.initialize();
+app.start();
 
