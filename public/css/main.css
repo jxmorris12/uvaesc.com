@@ -97,7 +97,7 @@ a:focus {
 
 .dropdown-menu {
   margin-top: -1px;
-  min-width: 180px;
+  min-width: 200px;
 }
 
 .center h2{
@@ -178,7 +178,7 @@ body > section {
   display: inline-block;
 }
 
-.navbar>.container .navbar-brand{
+.navbar > .container .navbar-brand{
   margin-left: 0;
 }
 
@@ -280,7 +280,7 @@ input.search-form:hover {
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  padding: 5px 12px;
+  padding: 5px 8px;
   margin: 0;
   border-radius: 3px;
   color: #fff;
