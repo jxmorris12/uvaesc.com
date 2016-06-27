@@ -53,20 +53,20 @@ var App = function() {
         var fileNameToRender = __dirname + '/html' + path;
         fs.readFile(fileNameToRender, function (err, data) {
           if (err) {
-          // This file does not exist, send error
-          res.send('404 not found');
+            // This file does not exist: send error
+            res.status(404).send('Not found');
           }
           else {
-          // Send back header
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          // Send file HEAD
-          res.write(self.Cache.HEAD);
-          // Send file data
-          res.write(data);
-          // Send file FOOT
-          res.write(self.Cache.FOOT);
-          // End response
-          res.end();
+            // Send back header
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            // Send file HEAD
+            res.write(self.Cache.HEAD);
+            // Send file data
+            res.write(data);
+            // Send file FOOT
+            res.write(self.Cache.FOOT);
+            // End response
+            res.end();
           }
         });
       }
