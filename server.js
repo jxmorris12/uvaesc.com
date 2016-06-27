@@ -36,6 +36,7 @@ var App = function() {
     self.Cache = {};
     self.Cache.HEAD = fs.readFileSync('layout/head.html');
     self.Cache.FOOT = fs.readFileSync('layout/foot.html');
+    self.Cache.ERROR = fs.readFileSync('error.html');
   }
 
   /**
@@ -53,8 +54,12 @@ var App = function() {
         var fileNameToRender = __dirname + '/html' + path;
         fs.readFile(fileNameToRender, function (err, data) {
           if (err) {
-            // This file does not exist: send error
-            res.status(404).send('Not found');
+            // This file does not exist - send error
+            res.writeHead(404, {'Content-Type': 'text/html'});
+            // Send 404 HTML
+            res.write(self.Cache.ERROR);
+            // End response
+            res.end();
           }
           else {
             // Send back header
