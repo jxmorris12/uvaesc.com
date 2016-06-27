@@ -28,3 +28,13 @@
   bottom: 0;
   margin: auto;
 }
+
+
+/* Container for content in-between FOOT and HEAD */
+.content-container {
+  padding: 30px;
+}
+/* For files that override */
+.content-container:empty {
+  display: none;
+}
