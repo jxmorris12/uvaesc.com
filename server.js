@@ -29,6 +29,35 @@ var App = function() {
         };
     };
 
+    /**
+     *  Create routes to handle all GET requests to server.
+     */
+    self.createRoutes = function() {
+        self.app.get('/*', 
+            function(req, res) {
+                // Get path
+                var path = req.path; // The path, like /*
+                if(path == '/') {
+                    path = '/index.html';
+                }
+                // Look for HTML at path
+                var fileNameToRender = __dirname + '/html' + path;
+                fs.readFile(fileNameToRender, function (err, data) {
+                  if (err) {
+                    // This file does not exist, send error
+                    res.send('404 not found');
+                  }
+                  else {
+                    // Send back file
+                    res.writeHead(200, {'Content-Type': 'text/html'});
+                    res.write(data);
+                    res.end();
+                  }
+                });
+            }
+        );
+    }
+
     /*  ================================================================  */
     /*  App server functions (main app logic here).                       */
     /*  ================================================================  */
@@ -45,6 +74,9 @@ var App = function() {
 
         // Call static content from /public folder
         self.app.use(express.static(__dirname + '/public'));
+
+        // Handle all get routes
+        self.createRoutes();
     };
 
     /**
