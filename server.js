@@ -50,7 +50,7 @@ var App = function() {
         if(path == '/') {
           // render home
           path = '/index.html';
-        } else if (path = '/index.html') {
+        } else if (path == '/index.html') {
           // redirect
           res.redirect('/');
           return;
