@@ -28,13 +28,23 @@
   bottom: 0;
   margin: auto;
 }
+/* 
+ * For the entire body, helps to stick footer at bottom.
+ * Thanks, Designed by Flexbox! 
+ */
+.site-body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
 
-
-/* Container for content in-between FOOT and HEAD */
-.content-container {
+/* Content in between HEAD and FOOT */
+.site-content {
+  flex: 1;
   padding: 30px;
 }
+
 /* For files that override */
-.content-container:empty {
+.site-content:empty {
   display: none;
 }
