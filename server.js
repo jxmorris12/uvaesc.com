@@ -37,6 +37,7 @@ var App = function() {
     self.Cache.HEAD = fs.readFileSync('layout/head.html');
     self.Cache.FOOT = fs.readFileSync('layout/foot.html');
     self.Cache.ERROR = fs.readFileSync('error.html');
+    self.Cache.MAIN = {};
   }
 
   /**
@@ -57,28 +58,46 @@ var App = function() {
         }
         // Look for HTML at path
         var fileNameToRender = __dirname + '/html' + path;
-        fs.readFile(fileNameToRender, function (err, data) {
-          if (err) {
-            // This file does not exist - send error
-            res.writeHead(404, {'Content-Type': 'text/html'});
-            // Send 404 HTML
-            res.write(self.Cache.ERROR);
-            // End response
-            res.end();
-          }
-          else {
-            // Send back header
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            // Send file HEAD
-            res.write(self.Cache.HEAD);
-            // Send file data
-            res.write(data);
-            // Send file FOOT
-            res.write(self.Cache.FOOT);
-            // End response
-            res.end();
-          }
-        });
+        // Check cache, render from cache if possible
+        if (self.Cache.MAIN[path]) {
+          var data = self.Cache.MAIN[path];
+          // Send back header
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          // Send file HEAD
+          res.write(self.Cache.HEAD);
+          // Send file data
+          res.write(data);
+          // Send file FOOT
+          res.write(self.Cache.FOOT);
+          // End response
+          res.end();
+        } else {
+          // Read from file
+          fs.readFile(fileNameToRender, function (err, data) {
+            if (err) {
+              // This file does not exist - send error
+              res.writeHead(404, {'Content-Type': 'text/html'});
+              // Send 404 HTML
+              res.write(self.Cache.ERROR);
+              // End response
+              res.end();
+            }
+            else {
+              // Send back header
+              res.writeHead(200, {'Content-Type': 'text/html'});
+              // Send file HEAD
+              res.write(self.Cache.HEAD);
+              // Send file data
+              res.write(data);
+              // Send file FOOT
+              res.write(self.Cache.FOOT);
+              // End response
+              res.end();
+              // Store in cache
+              self.Cache.MAIN[path] = data;
+            }
+          });
+        }
       }
     );
   }
