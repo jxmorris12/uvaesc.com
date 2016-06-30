@@ -48,7 +48,12 @@ var App = function() {
         // Get path
         var path = req.path; // The path, like /*
         if(path == '/') {
+          // render home
           path = '/index.html';
+        } else if (path = '/index.html') {
+          // redirect
+          res.redirect('/');
+          return;
         }
         // Look for HTML at path
         var fileNameToRender = __dirname + '/html' + path;
