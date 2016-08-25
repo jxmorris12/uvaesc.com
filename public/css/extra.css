@@ -48,3 +48,10 @@
 .site-content:empty {
   display: none;
 }
+
+/* To tint HTML elements with an overlay - used on images on the homepage */
+.overlay-tint {
+  background: rgba(50,50,50,0.35);
+  width: 100%;
+  height: 100%;
+}
