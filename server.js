@@ -50,14 +50,14 @@ var App = function() {
         var path = req.path; // The path, like /*
         if(path == '/') {
           // render home
-          path = '/index.html';
-        } else if (path == '/index.html') {
+          path = '/index';
+        } else if (path == '/index') {
           // redirect
           res.redirect('/');
           return;
         }
         // Look for HTML at path
-        var fileNameToRender = __dirname + '/html' + path;
+        var fileNameToRender = confirmHTMLExtension(__dirname + '/html' + path);
         // Check cache, render from cache if possible
         if (self.Cache.MAIN[path]) {
           var data = self.Cache.MAIN[path];
@@ -147,9 +147,22 @@ var App = function() {
     });
   };
 
+
 };   /*  End Application.  */
 
-
+/* 
+ * Helper function for taking a string that may end in '.html'
+ * and returning a string that definitely ends in '.html'.
+ */
+ var confirmHTMLExtension = function(path) {
+  var extension = '.html';
+  var pathExtension = path.substr(path.length - extension.length);
+  if(pathExtension != extension) {
+    return path + extension;
+  } else {
+    return path;
+  }
+ }
 
 /**
  *  main():  Main code.
