@@ -69,10 +69,10 @@ var App = function() {
    */
   self.createRoutes = function() {
     // API GETs
-    self.app.get('/#/posts', function(req, res) {
-      
+    self.app.get('/API/posts', function(req, res) {
+      console.log('POSTS');
     });
-    self.app.get('/#/votes', function(req, res) {
+    self.app.get('/API/votes', function(req, res) {
       // Find some documents
       self.db.votes.find({}).toArray(function(err, docs) {
         assert.equal(err, null);
@@ -82,10 +82,21 @@ var App = function() {
 
     });
     // HTML GETs
-    self.app.get('/*', 
+    /* 
+     * For posterity: I am SO sorry about this. I am trying to find
+     *   a way to handle API requests and distinguish paths between
+     *   those meant to render HTML and those meant to return JSON.
+     *   I landed on using this regular expression and classifying
+     *   HTML requests as those which start with /API and then
+     *   deciding that everything else was a request to the site.
+     *   Feel free to change if you know of a better way.
+     */
+    self.app.get(new RegExp('^(?!\/API\/).+\.*'),
       function(req, res) {
+        console.log('MAIN GET');
         // Get path
         var path = req.path; // The path, like /*
+        console.log('path:',path);
         if(path == '/') {
           // render home
           path = '/index';
