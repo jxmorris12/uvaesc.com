@@ -1,0 +1,56 @@
+<html ng-app>
+    <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script>
+
+        function HomeCtrl($scope) {
+            $scope.posts = [];
+
+
+            /*** Functions for obtaining things from the database on load ***/
+            var getPosts = function() {
+                // load post
+            }
+
+            var getVotes = function() {
+                // get votes for each post
+            }
+
+            /*** Functions for creating a post ***/
+            $scope.createPost = function() {
+                // send post
+                sock.send($scope.messageText);
+                $scope.messageText = "";
+            };
+
+
+            /*** Functions for voting ***/
+            $scope.upvotePost = function() {
+                // increment post vote count
+            }
+
+            $scope.downvotePost = function() {
+                // decrement post vote count
+            }
+
+            $scope.deUpvotePost = function() {
+                // remove upvote from a post and decrement count
+            }
+
+            $scope.deDownvotePost = function() {
+                // remove downvote from a post and increment count
+            }
+
+            /*** Functions called on load ***/
+
+        }
+    </script>
+</head>
+    <body>
+        <div ng-controller="HomeCtrl">
+            <ul>
+                <li ng-repeat="post in posts">{{ post }}</li>
+            </ul>
+        </div>
+    </body>
+</html>

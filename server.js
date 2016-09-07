@@ -1,8 +1,11 @@
 #!/bin/env node
 // Jack Morris 06/26/16
 
-var express = require('express');
-var fs    = require('fs');
+var assert  = require('assert'),
+    express = require('express'),
+    env     = require('./env'),
+    fs      = require('fs'),
+    mongo   = require('mongodb').MongoClient;
 
 var App = function() {
 
@@ -30,6 +33,27 @@ var App = function() {
   };
 
   /**
+   *  Connect to database and store as a property on self.
+   */
+  self.connectDatabase = function() {
+    // Get connection URL from environment file
+    var url = 'mongodb://localhost:27017/myproject';
+    // Use connect method to connect to the Server
+    mongo.connect(url, function(err, db) {
+      // Fail if database not found
+      assert.equal(null, err);
+      console.log("Connected to database.");
+
+      // Store database collections on self
+      self.db = {};
+
+      // Get db collections
+      self.db.posts = db.collection('posts');
+      self.db.votes = db.collection('votes');
+    });
+  };
+
+  /**
    * Store layout files in cache to be rendered with every HTML request.
    */
   self.createLayout = function() {
@@ -44,6 +68,20 @@ var App = function() {
    *  Create routes to handle all GET requests to server.
    */
   self.createRoutes = function() {
+    // API GETs
+    self.app.get('/#/posts', function(req, res) {
+      
+    });
+    self.app.get('/#/votes', function(req, res) {
+      // Find some documents
+      self.db.votes.find({}).toArray(function(err, docs) {
+        assert.equal(err, null);
+        console.log('found docs:', docs);
+        res.send(docs);
+      });
+
+    });
+    // HTML GETs
     self.app.get('/*', 
       function(req, res) {
         // Get path
@@ -130,7 +168,11 @@ var App = function() {
    *  Initialize the sample application.
    */
   self.initialize = function() {
+    // Set current variables for instance.
     self.setupVariables();
+
+    // Connect to the current database.
+    self.connectDatabase();
 
     // Create the express server and routes.
     self.initializeServer();
