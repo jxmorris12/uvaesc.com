@@ -82,18 +82,17 @@ var App = function() {
 
     });
     // HTML GETs
-    /* 
-     * For posterity: I am SO sorry about this. I am trying to find
-     *   a way to handle API requests and distinguish paths between
-     *   those meant to render HTML and those meant to return JSON.
-     *   I landed on using this regular expression and classifying
-     *   HTML requests as those which start with /API and then
-     *   deciding that everything else was a request to the site.
-     *   Feel free to change if you know of a better way.
-     */
+      /* 
+        For posterity: I am SO sorry about this. I am trying to find
+          a way to handle API requests and distinguish paths between
+          those meant to render HTML and those meant to return JSON.
+          I landed on using this regular expression and classifying
+          HTML requests as those which start with /API and then
+          deciding that everything else was a request to the site.
+          Feel free to change if you know of a better way.
+       */
     self.app.get(new RegExp('^(?!\/API\/).+\.*'),
       function(req, res) {
-        console.log('MAIN GET');
         // Get path
         var path = req.path; // The path, like /*
         console.log('path:',path);
