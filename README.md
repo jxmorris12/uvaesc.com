@@ -18,7 +18,7 @@ Start things using `node server`, open your browser, and go to http://localhost:
 
 ## for making live HTML edits
 
-You may notice that if you edit an HTML page you won't be able to see your changes. to disable server HTML caching, comment out this line in `server.js`: `self.Cache.MAIN[path] = data;`. Remember to uncomment the line when you're ready to put up a pull request.
+You may notice that if you edit an HTML page you won't be able to see your changes. to disable server HTML caching, comment out this line in server.js: `self.Cache.MAIN[path] = data;`. Remember to uncomment the line when you're ready to put up a pull request.
 
 ## deploy the website
 
