@@ -2,23 +2,27 @@
 
 ## Set up node
 
-run `brew install node` or install node js from online
+Run `brew install node` or install nodejs from online.
 
 ## Set up node package manager
 
-if you didn't install using homebrew, install that from online
+If you didn't install using homebrew, install that from online
 
 ## Install things locally
 
-clone this repo, enter it and run `npm install`
+Clone this repo, enter it and run `npm install`
 
 ## Start the server
 
-start things using `node server`, open your browser, and go to http://localhost:8080/
+Start things using `node server`, open your browser, and go to http://localhost:8080/
+
+## for making live HTML edits
+
+You may notice that if you edit an HTML page you won't be able to see your changes. to disable server HTML caching, comment out this line in `server.js`: `self.Cache.MAIN[path] = data;`. Remember to uncomment the line when you're ready to put up a pull request.
 
 ## deploy the website
 
-push to Openshift (not Github) to actually deploy to uvaesc.com
+Push to Openshift (not Github) to actually deploy to uvaesc.com
 
 ## For setting this up with OpenShift
 
