@@ -94,7 +94,7 @@ var App = function() {
               // End response
               res.end();
               // Store in cache
-              self.Cache.MAIN[path] = data;
+              // self.Cache.MAIN[path] = data;
             }
           });
         }
