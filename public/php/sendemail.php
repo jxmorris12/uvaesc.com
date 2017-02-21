@@ -1,4 +1,6 @@
 <?php
+include 'ChromePhp.php';
+    ChromePhp::log('Hello console!');
 	header('Content-type: application/json');
 	$status = array(
 		'type'=>'success',
@@ -16,6 +18,6 @@
     $body = 'Name: ' . $name . "\n\n" . 'Email: ' . $email . "\n\n" . 'Subject: ' . $subject . "\n\n" . 'Message: ' . $message;
 
     $success = @mail($email_to, $subject, $body, 'From: <'.$email_from.'>');
-
+    ChromePhp::log($success);
     echo json_encode($status);
     die;
